@@ -1,0 +1,154 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  
+<head> 
+    <meta charset="utf-8" /> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">        
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  
+    <style> 
+        .container { 
+            width: 100%; 
+            height: auto; 
+            /* border-bottom: .2rem solid gray; */
+        } 
+          
+        .foot { 
+            position: fixed; 
+            left: 10%; 
+            bottom: 0; 
+            width: 80%; 
+            text-align: center; 
+        } 
+        .navbar {
+            border: .5rem solid gray;
+            height: 8rem;
+            background-color: rgb(172, 172, 172);
+        }
+        .navbar-brand {
+            font-size: xx-large;
+            font-weight: bold;
+        }
+        .navbar-brand > span {
+            font-size: medium;
+        }
+        tr{
+            height: 40px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        table {
+            margin-top: 20px;
+            border: .2rem solid gray;
+            border-radius: 10px;
+        }
+        th {
+            padding: 0 10px 0 10px;
+        }
+        
+        /* html,body{
+            width: 100%;
+            height: 100%;
+            margin: 0; 
+            padding: 0; 
+            border: solid rgb(98, 98, 133);
+            border-width: thin;
+            overflow:hidden;
+            display:block;
+            box-sizing: border-box;
+        } */
+    </style> 
+</head> 
+  
+<body> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            Task Tracker 
+            <br/>
+            <span>v2.0</span>
+        </a>
+    </nav>
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            <h3>Create a Task</h3>
+            <form>
+                <div class="form-group">
+                  <label for="addTaskName">Name</label>
+                  <input type="text" class="form-control" id="addTaskName" placeholder="Enter Task Name">
+                </div>
+                <div class="form-group">
+                  <label for="addTaskDate">Date</label>
+                  <input type="text" class="form-control" id="addTaskDate" placeholder="Enter Date">
+                </div>
+                <div class="form-group">
+                  <label for="addTaskAssignee">Assignee</label>
+                  <input type="text" class="form-control" id="addTaskAssignee" placeholder="Enter Assignent">
+                </div>
+                <button id="submitButton" type="button" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="col">
+            <h3>Existing Tasks</h3>
+            <table id="existing-tasks">
+
+            </table>
+          </div>
+          
+        </div>
+      </div>
+    </div> 
+  
+        <div class="container"> 
+        </div> 
+    <script> 
+        $(document).ready(function() { 
+            var data = [    {"name": "Test Task #1", "date": "12/01/2012", "assigned": "John Doe" },
+                            {"name": "Test Task #2", "date": "12/02/2012", "assigned": "John Doe" },
+                            {"name": "Test Task #3", "date": "12/03/2012", "assigned": "John Doe" },
+                            {"name": "Test Task #4", "date": "12/04/2012", "assigned": "John Doe" },
+                            {"name": "Test Task #5", "date": "12/05/2012", "assigned": "John Doe" },
+                            {"name": "Test Task #6", "date": "12/06/2012", "assigned": "John Doe" },
+                            {"name": "Test Task #7", "date": "12/07/2012", "assigned": "John Doe" }
+                        ];
+                        
+            function appendTableRows(tableRowsArray) {
+                for (var i = 0; i < tableRowsArray.length; i++) {
+                    $('#existing-tasks').append(
+                        '<tr><th>' + tableRowsArray[i].name + 
+                        '</th><th>' + tableRowsArray[i].date + 
+                        '</th><th>' + tableRowsArray[i].assigned + 
+                        '</th></tr>');
+                }
+            }
+
+            function addNewTask() {
+                var taskName = $('#addTaskName').val();
+                var taskDate = $('#addTaskDate').val();
+                var taskAssigned = $('#addTaskAssignee').val();
+                data.push({"name" : taskName, "date" : taskDate, "assigned" : taskAssigned })
+                $('#existing-tasks').prepend(
+                        '<tr><th>' + taskName + 
+                        '</th><th>' + taskDate + 
+                        '</th><th>' + taskAssigned + 
+                        '</th></tr>');
+                $('#addTaskName').val('');
+                $('#addTaskDate').val('');
+                var taskAssigned = $('#addTaskAssignee').val('');
+            }
+
+            appendTableRows(data);
+
+            $("tr:even").css("background-color", "#eeeeee");
+            $("tr:odd").css("background-color", "#ffffff");
+            $('#submitButton').click(function(){
+                addNewTask();
+            });
+        }); 
+    </script> 
+</body> 
+  
+</html> 
